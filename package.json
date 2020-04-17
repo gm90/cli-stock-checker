@@ -1,11 +1,14 @@
 {
-  "name": "stocks",
+  "name": "stock",
   "version": "1.0.0",
-  "description": "Node.js example server starter project",
+  "description": "Little node utility to get the current stock price on the command line",
   "main": "src/index.js",
   "bin": "src/index.js",
   "scripts": {},
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "4.0.0",
+    "node-fetch": "2.6.0"
+  },
   "devDependencies": {
     "nodemon": "1.18.4"
   },
