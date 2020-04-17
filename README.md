@@ -10,4 +10,4 @@ Install globally by running
 
 Once installed you should be able to retrieve stocks from anywhere for a given symbol
 
-`stocks -s TSLA`
+`stocks TSLA`
