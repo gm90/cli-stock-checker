@@ -1,11 +1,17 @@
 const fetch = require("node-fetch");
-const chalk = require("chalk");
+const { red, green, cyan } = require("chalk");
+const KEYS = require("./keys");
+
+if (process.env.API_KEY === undefined || process.env.API_KEY === "") {
+  console.error(red(`You need an API from https://www.alphavantage.co`));
+  return;
+}
 
 const args = process.argv.splice(2);
 const symbol = args[0];
 
 if (symbol === undefined || symbol === "") {
-  console.error(chalk.red(`You need to specify a symbol`));
+  console.error(red(`You need to specify a symbol`));
   return;
 }
 
@@ -23,23 +29,22 @@ const getData = async url => {
   }
 };
 
-const ticker = async () => {
+(async () => {
   const data = await getData(url);
-  const properties = data["Global Quote"];
+  const properties = data[KEYS.heading];
 
-  for (let [key, value] of Object.entries(properties)) {
-    console.log(`${key}: ${value}`);
-  }
+  // for (let [key, value] of Object.entries(properties)) {
+  //   console.log(`${key}: ${value}`);
+  // }
 
-  const price = `$${properties["05. price"]}`;
-  const open = properties["02. open"];
+  const price = `${properties[KEYS.price]}`;
+  const priceInDollars = `$${price}`;
+  const close = properties[KEYS.close];
   console.log(
-    `Stock price for ${chalk.blue(symbol)} is ${
-      parseFloat(price, 10) > parseFloat(open, 10)
-        ? chalk.green(price)
-        : chalk.red(price)
+    `Stock price for ${cyan(symbol.toUpperCase())} is ${
+      parseFloat(price) > parseFloat(close)
+        ? green(priceInDollars)
+        : red(priceInDollars)
     }`
   );
-};
-
-ticker();
+})();
