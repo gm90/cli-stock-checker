@@ -21,23 +21,32 @@ const quote = async symbol => {
     process.env.API_KEY
   }`;
 
-  const data = await getData(url);
-  const properties = data[KEYS.heading];
+  try {
+    const data = await getData(url);
 
-  // for (let [key, value] of Object.entries(properties)) {
-  //   console.log(`${key}: ${value}`);
-  // }
+    if (data[KEYS.error]) {
+      throw new Error(data[KEYS.error]);
+    }
 
-  const price = `${properties[KEYS.price]}`;
-  const priceInDollars = `$${price}`;
-  const close = properties[KEYS.close];
-  console.log(
-    `Stock price for ${cyan(symbol.toUpperCase())} is ${
-      parseFloat(price) > parseFloat(close)
-        ? green(priceInDollars)
-        : red(priceInDollars)
-    }`
-  );
+    const properties = data[KEYS.heading];
+
+    // for (let [key, value] of Object.entries(properties)) {
+    //   console.log(`${key}: ${value}`);
+    // }
+
+    const price = `${properties[KEYS.price]}`;
+    const priceInDollars = `$${price}`;
+    const close = properties[KEYS.close];
+    console.log(
+      `Stock price for ${cyan(symbol.toUpperCase())} is ${
+        parseFloat(price) > parseFloat(close)
+          ? green(priceInDollars)
+          : red(priceInDollars)
+      }`
+    );
+  } catch (error) {
+    console.error(red(error));
+  }
 };
 
 module.exports = {

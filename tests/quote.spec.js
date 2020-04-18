@@ -1,5 +1,5 @@
 const sinon = require("sinon");
-const { fetch } = require("./../src/fetch");
+const fetch = require("./../src/fetch");
 const { quote } = require("./../src/quote");
 const { red } = require("chalk");
 const { expect } = require("chai");
@@ -22,4 +22,17 @@ describe("Quote", () => {
     quote("");
     expect(consoleSpy.calledWith(red("You need to specify a symbol")));
   });
+
+  // it("should getData with the complete url ", () => {
+  //   process.env.API_KEY = "some-key";
+  //   sinon.stub(fetch, "getData").returns(3);
+
+  //   const getDataSpy = sinon.spy(fetch, "getData");
+  //   quote("some-symbol");
+  //   expect(
+  //     getDataSpy.calledWith(
+  //       "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=some-symbol&apikey=some-key"
+  //     )
+  //   );
+  // });
 });

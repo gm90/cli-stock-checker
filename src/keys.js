@@ -1,4 +1,5 @@
 module.exports = {
+  error: "Error Message",
   heading: "Global Quote",
   symbol: "01. symbol",
   open: "02. open",

@@ -6,7 +6,7 @@ const getData = async url => {
     const json = await response.json();
     return json;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
