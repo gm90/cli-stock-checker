@@ -4,11 +4,16 @@
   "description": "Little node utility to get the current stock price on the command line",
   "main": "src/index.js",
   "bin": "src/index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "mocha ./tests/**.spec.js"
+  },
   "dependencies": {
     "chalk": "4.0.0",
     "node-fetch": "2.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "7.1.1",
+    "sinon": "9.0.2"
+  },
   "keywords": ["stocks", "cli", "trading"]
 }

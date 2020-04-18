@@ -1,35 +1,24 @@
-const fetch = require("node-fetch");
 const { red, green, cyan } = require("chalk");
 const KEYS = require("./keys");
+const { getData } = require("./fetch");
 
-if (process.env.API_KEY === undefined || process.env.API_KEY === "") {
-  console.error(red(`You need an API from https://www.alphavantage.co`));
-  return;
-}
-
-const args = process.argv.splice(2);
-const symbol = args[0];
-
-if (symbol === undefined || symbol === "") {
-  console.error(red(`You need to specify a symbol`));
-  return;
-}
-
-const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${
-  process.env.API_KEY
-}`;
-
-const getData = async url => {
-  try {
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log(error);
+const quote = async symbol => {
+  if (process.env.API_KEY === undefined || process.env.API_KEY === "") {
+    console.error(red(`You need an API from https://www.alphavantage.co`));
+    return;
   }
-};
 
-(async () => {
+  if (symbol === undefined || symbol === "") {
+    console.error(`You need to specify a symbol`);
+    return false;
+  }
+
+  console.log("*************", symbol);
+
+  const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${
+    process.env.API_KEY
+  }`;
+
   const data = await getData(url);
   const properties = data[KEYS.heading];
 
@@ -47,4 +36,12 @@ const getData = async url => {
         : red(priceInDollars)
     }`
   );
-})();
+};
+
+const args = process.argv.splice(2);
+const symbol = args[0];
+quote(symbol);
+
+module.exports = {
+  quote
+};
