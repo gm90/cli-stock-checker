@@ -10,5 +10,5 @@
     "node-fetch": "2.6.0"
   },
   "devDependencies": {},
-  "keywords": []
+  "keywords": ["stocks", "cli", "trading"]
 }
